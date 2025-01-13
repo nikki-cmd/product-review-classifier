@@ -34,7 +34,7 @@ class Regression():
             self.weights -= self.lr * dw
             self.bias -= self.lr * db
         
-    def feed_forward(self, x):
+    def feed_forward(self, X):
         z = np.dot(X, self.weights) + self.bias
         A = self.target_function(z)
         return A
