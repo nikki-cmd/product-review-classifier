@@ -11,9 +11,12 @@ print(df.columns)
 
 comments = []
 
+for i in range(0, len(df.Text)):
+    comments.append(df.Text[i])
+
 vectorizer = TfidfVectorizer()
 
-matrix = vectorizer.fit_transform(comments)
+matrix = vectorizer.fit_transform(comments[:1000])
 
 feature_names = vectorizer.get_feature_names_out()
 scores = matrix.toarray()[0]
