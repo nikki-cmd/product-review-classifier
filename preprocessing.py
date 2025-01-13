@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-path = "" 
+path = "datasets/Reviews.csv" 
 
 df = pd.read_csv(path)
 df = pd.DataFrame(df)
