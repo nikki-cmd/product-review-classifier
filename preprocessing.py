@@ -7,6 +7,7 @@ df = pd.read_csv(path)
 df = pd.DataFrame(df)
 
 print(df.head(10))
+print(df.columns)
 
 comments = []
 
