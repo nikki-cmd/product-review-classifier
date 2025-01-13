@@ -7,6 +7,7 @@ class Regression():
         self.n_iters = n_iters
         self.weights = None
         self.bias = None
+        self.losses = []
         
     
     def target_function(x): #sigmoid
@@ -16,7 +17,8 @@ class Regression():
         #binary cross entropy
         epsilon = 1e-9
         y1 = y_true * np.log(y_pred + epsilon)
-        y1 = (1 - y_true) * np.log(1 - y_pred + epsilon)
+        y2 = (1 - y_true) * np.log(1 - y_pred + epsilon)
+        return -np.mean(y1 + y2)
     
     def fit(self, X, y):
         n_samples, n_features = X.shape
@@ -26,8 +28,8 @@ class Regression():
         
         for _ in range(self.n_iters):
             A = self.feed_forward(X)
+            self.losses.append(self.loss_calc(y,A))
             dz = A - y
-            
             dw = (1 / n_samples) * np.dot(X.T, dz)
             db = (1 / n_samples) * np.sum(A - y)
             
