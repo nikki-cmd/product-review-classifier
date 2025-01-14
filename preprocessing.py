@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
+from nltk.corpus import stopwords
 
 
 def divide_chunks(l, n):
@@ -19,7 +20,7 @@ def get_key_words(x):
         sorted_keywords = [word for _, word in sorted(zip(scores, feature_names), reverse=True)]
         for j in range(0, len(sorted_keywords)):
             keys.append(sorted_keywords[j])
-            
+    keys = [word for word in keys if word not in stopwords.words('english')]
     return keys
 
 def get_data():
