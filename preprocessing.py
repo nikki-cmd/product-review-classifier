@@ -23,7 +23,13 @@ def get_key_words(x):
     keys = [word for word in keys if word not in stopwords.words('english')]
     return keys
 
+def vectorize_texts(texts, key_words):
+    vectorizer = TfidfVectorizer(vocabulary=key_words, stop_words='english')
+    matrix = vectorizer.fit_transform(texts)
+    return matrix.toarray()
+
 def get_data():
+    print("Data in preprocessing")
     path = "datasets/Reviews.csv" 
 
     df = pd.read_csv(path)
@@ -41,6 +47,13 @@ def get_data():
     keys_good = get_key_words(x_good)
     keys_excellent = get_key_words(x_excellent)
     
-    return [keys_bad, keys_good, keys_excellent]
+    combined_keys = list(set(keys_bad) | set(keys_good) | set(keys_excellent))
+    
+    # Векторизуем все тексты
+    X = vectorize_texts(df['Text'], combined_keys)
+    y = df['Label'].values  # Метки классов
+    
+    print("Preprocessing finished")
+    return X, y, combined_keys
 
 

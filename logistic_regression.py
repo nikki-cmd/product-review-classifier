@@ -1,7 +1,7 @@
 import numpy as np
 from utils import *
 
-class Regression():
+class LogisticRegression():
     def __init__(self, learning_rate=0.001, n_iters=1000):
         self.lr = learning_rate
         self.n_iters = n_iters
@@ -11,7 +11,7 @@ class Regression():
         
     
     def target_function(x): #sigmoid
-        return (1 / 1 + np.exp(-x))
+        return (1 / (1 + np.exp(-x)))
     
     def loss_calc(self, y_true, y_pred):
         #binary cross entropy
@@ -21,12 +21,14 @@ class Regression():
         return -np.mean(y1 + y2)
     
     def fit(self, X, y):
+        print("Start fitting")
         n_samples, n_features = X.shape
         
         self.weights = np.zeros(n_features)
         self.bias = 0
         
-        for _ in range(self.n_iters):
+        for epoch in range(self.n_iters):
+            print(f'Epoch:{epoch}')
             A = self.feed_forward(X)
             self.losses.append(self.loss_calc(y,A))
             dz = A - y
